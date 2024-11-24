@@ -5,6 +5,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import signal
 import imghdr
+from flask_swagger_ui import get_swaggerui_blueprint
 import os
 from pymongo import MongoClient
 
@@ -12,7 +13,8 @@ app = Flask(__name__)
 CORS(app)
 API_KEY = os.getenv('API_KEY')
 logger=Logger()
-
+SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
+API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
 # Connect to MongoDB (default host and port)
 client = MongoClient(os.getenv('DB_PATH'))
 db = client["image_metadata_db"]  # Choose the database
@@ -99,7 +101,24 @@ def get_meta_data():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Call factory function to create our blueprint
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
+    API_URL,
+    config={  # Swagger UI config overrides
+        'app_name': "Test application"
+    },
+    # oauth_config={  # OAuth config. See https://github.com/swagger-api/swagger-ui#oauth2-configuration .
+    #    'clientId': "your-client-id",
+    #    'clientSecret': "your-client-secret-if-required",
+    #    'realm': "your-realms",
+    #    'appName': "your-app-name",
+    #    'scopeSeparator': " ",
+    #    'additionalQueryStringParams': {'test': "hello"}
+    # }
+)
 
+app.register_blueprint(swaggerui_blueprint)
 
 # Graceful shutdown function
 def graceful_shutdown(signal, frame):
