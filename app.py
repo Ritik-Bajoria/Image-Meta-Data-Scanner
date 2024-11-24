@@ -4,6 +4,7 @@ from utils.logger import Logger
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import signal
+import imghdr
 import os
 from pymongo import MongoClient
 
@@ -74,7 +75,14 @@ def get_meta_data():
                 "error": True,
                 'message': 'No selected file'
             }), 400
-            
+        
+        file_type = imghdr.what(file)
+        
+        if file_type not in ['jpeg', 'jpg', 'png', 'tiff']:
+            return jsonify({
+                "error": True,
+                "message": f"Unsupported file type. Please upload a supported image file."
+            }), 400  
         metadata = exif_extractor(file)
 
         # Add the image name to the metadata
