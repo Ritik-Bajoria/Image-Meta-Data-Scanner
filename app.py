@@ -85,6 +85,7 @@ def get_meta_data():
                 "error": True,
                 "message": f"Unsupported file type. Please upload a supported image file."
             }), 400  
+        print(file)
         metadata = exif_extractor(file)
 
         # Add the image name to the metadata
