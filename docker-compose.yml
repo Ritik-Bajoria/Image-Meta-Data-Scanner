@@ -9,7 +9,7 @@ services:
     # environment:
     #   - FLASK_APP=wsgi.py
     #   - FLASK_ENV=production
-    command: gunicorn --bind 0.0.0.0:5000 wsgi:app
+    command: gunicorn -w 4 --bind 0.0.0.0:5000 app:app
     volumes:
       - .:/app
     depends_on:
