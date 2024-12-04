@@ -5,3 +5,4 @@ python-dotenv==1.0.1
 ExifRead==3.0.0
 flask_swagger_ui==4.11.1
 pillow==11.0.0
+gunicorn==23.0.0
