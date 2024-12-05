@@ -15,7 +15,6 @@ EXPOSE 5000
 
 # # Define environment variables for the Flask app
 ENV FLASK_APP=app.py
-ENV FLASK_ENV=production
 
 # Run the Flask app
 ENTRYPOINT ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
