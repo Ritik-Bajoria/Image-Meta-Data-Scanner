@@ -12,6 +12,7 @@ from pymongo import MongoClient
 app = Flask(__name__)
 CORS(app)
 API_KEY = os.getenv('API_KEY')
+print(API_KEY)
 logger=Logger()
 SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
 API_URL = '/static/swagger.json'  # Our API url (can of course be a local resource)
