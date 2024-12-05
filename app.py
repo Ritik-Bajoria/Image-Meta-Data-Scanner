@@ -134,5 +134,5 @@ signal.signal(signal.SIGTERM, graceful_shutdown)
 if __name__ == '__main__':
     port = os.getenv('PORT')
     host = os.getenv('HOST')
-    app.run(debug=True,host=host,port=port)
+    app.run(host=host,port=port)
     logger.infot(f"server is listenting at {host}:{port}")
