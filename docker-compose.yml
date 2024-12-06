@@ -9,6 +9,8 @@ services:
     environment:
       - API_KEY=${API_KEY}
       - DB_PATH=${DB_PATH}
+      - HOST=${HOST}
+      - PORT=${PORT}
       - FLASK_APP=app.py
     depends_on:
       - mongo
